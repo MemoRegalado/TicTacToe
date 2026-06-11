@@ -50,8 +50,9 @@ select {
   --button-background: #ffffff;
   --button-text: #000000;
   --accent-color: #ff4757;
-  --box-color: #cbcbe9;
-  --box-hover-color: #d9d9f9;
+  --box-color: #212128;
+  --box-hover-color: #7e7ec3;
+  --celebration-glow: rgba(255, 255, 255, 0.35);
 }
 
 body {
@@ -60,8 +61,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--background-color);
+  position: relative;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -79,12 +82,21 @@ button {
   border: none;
   border-radius: 5px;
   margin-bottom: 20px;
+  transition: transform 200ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
 }
 
 p {
   color: var(--text-color);
   font-size: 1.5rem;
   margin-bottom: 20px;
+  transition:
+    transform 300ms ease,
+    text-shadow 300ms ease,
+    color 300ms ease;
 }
 
 .containerTicTacToe {
@@ -95,7 +107,7 @@ p {
   grid-template-columns: repeat(3, 120px);
   grid-template-rows: repeat(3, 120px);
   gap: 5px;
-  background-color: var(--surface-color);
+  /* background-color: var(--surface-color); */
 }
 
 .containerTicTacToe .box {
@@ -106,9 +118,76 @@ p {
   font-size: 3rem;
   color: var(--text-color);
   cursor: pointer;
-  /* border-radius: 5px; */
+  transition: background-color 150ms ease;
 }
 
 .containerTicTacToe .box:hover {
   background-color: var(--box-hover-color);
+}
+
+.celebration-text {
+  animation: popText 1.5s ease forwards;
+  color: #ffeb3b;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 25px rgba(255, 165, 0, 0.8),
+    0 0 40px rgba(255, 0, 128, 0.6);
+}
+
+@keyframes popText {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.confetti-piece {
+  position: absolute;
+  opacity: 0.9;
+  border-radius: 2px;
+  transform-origin: center;
+  animation-name: confetti-fall;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh) translateX(50px) rotate(1080deg);
+    opacity: 0;
+  }
+}
+
+body.celebration-active {
+  background:
+    /* radial-gradient(circle at top, rgba(255, 255, 255, 0.1), transparent 40%),  */ linear-gradient(
+    180deg,
+    #7e7ec3,
+    var(--surface-color)
+  );
 }
