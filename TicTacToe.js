@@ -149,3 +149,4 @@ boxes.forEach((box) => {
 if (resetButton) {
   resetButton.addEventListener("click", resetBoard);
 }
+console.log(boxes);
